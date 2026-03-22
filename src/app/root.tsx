@@ -6,7 +6,6 @@ import {
   Scripts,
   ScrollRestoration,
   useAsyncError,
-  useLocation,
   useRouteError,
 } from 'react-router';
 
@@ -26,13 +25,9 @@ import './global.css';
 // @ts-ignore
 import { LoadFonts } from 'virtual:load-fonts.jsx';
 import fetch from '@/__create/fetch';
-// @ts-ignore
-import { SessionProvider } from '@auth/create/react';
 import { toPng } from 'html-to-image';
-import { useNavigate } from 'react-router';
 import { serializeError } from 'serialize-error';
 import { Toaster, toast } from 'sonner';
-import { useDevServerHeartbeat } from '../__create/useDevServerHeartbeat';
 import type { Route } from './+types/root';
 
 export function meta({ location }: Route.MetaArgs) {
@@ -421,13 +416,6 @@ export const useHandleScreenshotRequest = () => {
 import { initGA, initPixel, initScrollTracking } from '../utils/analytics';
 
 export function Layout({ children }: { children: ReactNode }) {
-  useHandshakeParent();
-  useHandleScreenshotRequest();
-  useDevServerHeartbeat();
-  const navigate = useNavigate();
-  const location = useLocation();
-  const pathname = location?.pathname;
-
   useEffect(() => {
     const cleanupScroll = initScrollTracking();
     return () => {
@@ -436,30 +424,6 @@ export function Layout({ children }: { children: ReactNode }) {
   }, []);
 
   const isMobile = typeof window !== 'undefined' ? window.innerWidth < 768 : false;
-  useEffect(() => {
-    const handleMessage = (event: MessageEvent) => {
-      if (event.data.type === 'sandbox:navigation') {
-        navigate(event.data.pathname);
-      }
-    };
-    window.addEventListener('message', handleMessage);
-    window.parent.postMessage({ type: 'sandbox:web:ready' }, '*');
-    return () => {
-      window.removeEventListener('message', handleMessage);
-    };
-  }, [navigate]);
-
-  useEffect(() => {
-    if (pathname) {
-      window.parent.postMessage(
-        {
-          type: 'sandbox:web:navigation',
-          pathname,
-        },
-        '*'
-      );
-    }
-  }, [pathname]);
   return (
     <html lang="es-PE">
       <head>
@@ -545,12 +509,16 @@ export function Layout({ children }: { children: ReactNode }) {
             }).replace(/</g, '\\u003c')
           }}
         />
-        <script type="module" src="/src/__create/dev-error-overlay.js"></script>
-        <link rel="icon" href="/src/__create/favicon.png" />
+        {import.meta.env.DEV ? (
+          <>
+            <script type="module" src="/src/__create/dev-error-overlay.js"></script>
+            <link rel="icon" href="/src/__create/favicon.png" />
+          </>
+        ) : null}
         {LoadFontsSSR ? <LoadFontsSSR /> : null}
       </head>
       <body>
-        <ClientOnly loader={() => children} />
+        {children}
         <Toaster position={isMobile ? 'top-center' : 'bottom-right'} />
         <ScrollRestoration />
         <Scripts />
@@ -561,9 +529,5 @@ export function Layout({ children }: { children: ReactNode }) {
 }
 
 export default function App() {
-  return (
-    <SessionProvider>
-      <Outlet />
-    </SessionProvider>
-  );
+  return <Outlet />;
 }
