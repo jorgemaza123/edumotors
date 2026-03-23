@@ -48,10 +48,10 @@ const isFirstPartyURL = (url: string) => {
 
 const isSecondPartyUrl = (url: string) => {
   return (
-    (process.env.NEXT_PUBLIC_CREATE_API_BASE_URL &&
-      url.startsWith(process.env.NEXT_PUBLIC_CREATE_API_BASE_URL)) ||
-    (process.env.NEXT_PUBLIC_CREATE_BASE_URL &&
-      url.startsWith(process.env.NEXT_PUBLIC_CREATE_BASE_URL)) ||
+    (import.meta.env.NEXT_PUBLIC_CREATE_API_BASE_URL &&
+      url.startsWith(import.meta.env.NEXT_PUBLIC_CREATE_API_BASE_URL)) ||
+    (import.meta.env.NEXT_PUBLIC_CREATE_BASE_URL &&
+      url.startsWith(import.meta.env.NEXT_PUBLIC_CREATE_BASE_URL)) ||
     url.startsWith('https://www.create.xyz') ||
     url.startsWith('https://api.create.xyz/') ||
     url.startsWith('https://www.createanything.com') ||
@@ -66,7 +66,7 @@ export const fetchWithHeaders = async (
   const url = getUrlFromArgs(input, init);
 
   const additionalHeaders = {
-    'x-createxyz-project-group-id': process.env.NEXT_PUBLIC_PROJECT_GROUP_ID,
+    'x-createxyz-project-group-id': import.meta.env.NEXT_PUBLIC_PROJECT_GROUP_ID,
   };
 
   const isExternalFetch = !isFirstPartyURL(url) && !isSecondPartyUrl(url);
@@ -108,7 +108,7 @@ export const fetchWithHeaders = async (
 
   const prefix = !isSecondPartyUrl(url)
     ? isBackend()
-      ? (process.env.NEXT_PUBLIC_CREATE_BASE_URL ?? 'https://www.create.xyz')
+      ? (import.meta.env.NEXT_PUBLIC_CREATE_BASE_URL ?? 'https://www.create.xyz')
       : ''
     : '';
 

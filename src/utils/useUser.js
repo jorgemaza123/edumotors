@@ -13,7 +13,7 @@ const useUser = () => {
 }, [])
 
   const refetchUser = React.useCallback(() => {
-    if(process.env.NEXT_PUBLIC_CREATE_ENV === "PRODUCTION") {
+    if(import.meta.env.NEXT_PUBLIC_CREATE_ENV === "PRODUCTION") {
       if (id) {
         fetchUser(session).then(setUser);
       } else {
@@ -24,7 +24,7 @@ const useUser = () => {
 
   React.useEffect(refetchUser, [refetchUser]);
 
-  if (process.env.NEXT_PUBLIC_CREATE_ENV !== "PRODUCTION") {
+  if (import.meta.env.NEXT_PUBLIC_CREATE_ENV !== "PRODUCTION") {
     return { user, data: session?.user || null, loading: status === 'loading', refetch: refetchUser };
   }
   return { user, data: user, loading: status === 'loading' || (status === 'authenticated' && !user), refetch: refetchUser };
