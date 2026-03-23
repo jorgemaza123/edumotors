@@ -35,9 +35,9 @@ export async function GET(request) {
 		routes.map(async (route) => {
 			let component = null;
 			try {
-				const response = await import(
-					/* @vite-ignore */ path.join('../../../', route.file)
-				);
+				const filePath = path.join('../../../', route.file);
+				const normalizedPath = filePath.split(path.sep).join('/');
+				const response = await import(/* @vite-ignore */ normalizedPath);
 				component = response.default;
 			} catch (error) {
 				console.debug('Error importing component:', route.file, error);
