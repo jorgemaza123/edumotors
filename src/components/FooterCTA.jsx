@@ -129,11 +129,21 @@ const FooterCTA = ({
               ))}
               <li className="flex items-start gap-2 text-white/60 pt-2">
                 <MapPin size={16} className="text-[#0055FF] shrink-0 mt-0.5" />
-                <span>{businessData.address}</span>
+                <span>{businessData.addressShort}</span>
               </li>
               <li className="flex items-center gap-2 text-white/60">
                 <Phone size={16} className="text-[#0055FF] shrink-0" />
                 <a href={`tel:${businessData.phoneRaw}`}>{businessData.phoneDisplay}</a>
+              </li>
+              <li>
+                <a
+                  href={businessData.mapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#39FF14] font-bold"
+                >
+                  Abrir Google Maps
+                </a>
               </li>
             </ul>
           </div>

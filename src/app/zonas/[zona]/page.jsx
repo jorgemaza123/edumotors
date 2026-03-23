@@ -10,6 +10,7 @@ import FooterCTA from "../../../components/FooterCTA";
 import WhatsAppButton from "../../../components/WhatsAppButton";
 import {
   buildWhatsAppUrl,
+  businessData,
   getServiceBySlug,
   getZoneBySlug,
 } from "../../../content/automotiveContent";
@@ -41,13 +42,15 @@ function zoneSchema(zoneName) {
     areaServed: zoneName,
     provider: {
       "@type": "AutoRepair",
-      name: "EDU MOTORS",
-      telephone: "+51960812600",
+      name: businessData.name,
+      telephone: `+${businessData.whatsappNumber}`,
       address: {
         "@type": "PostalAddress",
-        addressLocality: "Villa El Salvador",
-        addressRegion: "Lima",
-        addressCountry: "PE",
+        streetAddress: businessData.address,
+        addressLocality: businessData.district,
+        addressRegion: businessData.region,
+        postalCode: businessData.postalCode,
+        addressCountry: businessData.country,
       },
     },
   };

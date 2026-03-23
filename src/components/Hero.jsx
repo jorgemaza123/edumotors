@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "motion/react";
 import { CheckCircle2, Phone, Zap } from "lucide-react";
-import { buildWhatsAppUrl } from "../content/automotiveContent";
+import { buildWhatsAppUrl, businessData } from "../content/automotiveContent";
 import { trackEvent } from "../utils/analytics";
 
 const painSignals = [
@@ -25,7 +25,7 @@ const Hero = () => {
   );
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center pt-24 overflow-hidden bg-[#0A0F1E]">
+    <section className="relative flex min-h-[88svh] items-center justify-center overflow-hidden bg-[#0A0F1E] pt-28 pb-12 md:min-h-screen">
       <div className="absolute inset-0 z-0">
         <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-[#0055FF]/20 rounded-full blur-[120px] animate-pulse" />
         <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-[#39FF14]/10 rounded-full blur-[120px]" />
@@ -107,14 +107,14 @@ const Hero = () => {
               Diagnostico GRATIS por WhatsApp
             </a>
             <a
-              href="tel:960812600"
+              href={`tel:${businessData.phoneRaw}`}
               onClick={() =>
                 trackEvent("click_cta_principal", { location: "hero_phone" })
               }
               className="inline-flex items-center justify-center gap-3 px-8 py-5 border border-white/10 rounded-full text-white font-bold hover:border-[#0055FF]/40 hover:bg-white/5 transition-all"
             >
               <Phone size={18} />
-              Llamar ahora
+              Llamar al {businessData.phoneDisplay}
             </a>
           </motion.div>
 
@@ -125,7 +125,7 @@ const Hero = () => {
             className="mt-5 flex items-center justify-center gap-2 text-white/45 text-sm italic"
           >
             <Zap size={14} className="text-[#39FF14]" />
-            Respuesta rapida para Villa El Salvador, SJM, VMT, Lurin y zonas cercanas
+            Taller en {businessData.addressShort}. Atendemos Lima Sur con respuesta rapida.
           </motion.div>
 
           <motion.div

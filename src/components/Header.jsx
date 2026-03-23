@@ -1,6 +1,6 @@
 import React from "react";
 import { Phone } from "lucide-react";
-import { buildWhatsAppUrl } from "../content/automotiveContent";
+import { buildWhatsAppUrl, businessData } from "../content/automotiveContent";
 
 const navItems = [
   { href: "/servicios", label: "Servicios" },
@@ -39,11 +39,11 @@ const Header = () => {
 
         <div className="flex items-center gap-4">
           <a
-            href="tel:960812600"
+            href={`tel:${businessData.phoneRaw}`}
             className="hidden sm:flex items-center gap-2 text-white font-bold text-sm"
           >
             <Phone size={16} className="text-[#0055FF]" />
-            960 812 600
+            {businessData.phoneDisplay}
           </a>
           <a
             href={whatsappUrl}

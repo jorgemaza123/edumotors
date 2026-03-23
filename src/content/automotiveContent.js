@@ -3,10 +3,16 @@ export const businessData = {
   phoneDisplay: "960 812 600",
   phoneRaw: "960812600",
   whatsappNumber: "51960812600",
-  address: "Av. Principal S/N, Villa El Salvador, Lima",
+  address: "Villa la Paz manzana V, Villa la Paz manzana B, Villa El Salvador 15058",
+  addressShort: "Villa la Paz, Villa El Salvador 15058",
+  district: "Villa El Salvador",
   city: "Lima",
   region: "Lima",
+  postalCode: "15058",
   country: "PE",
+  mapsUrl: "https://maps.app.goo.gl/7DwkPV5cLNdsfAvt5",
+  latitude: -12.239306,
+  longitude: -76.913686,
 };
 
 export const zoneLinks = [

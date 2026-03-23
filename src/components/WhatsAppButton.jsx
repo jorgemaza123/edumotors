@@ -5,6 +5,7 @@ import { trackEvent } from "../utils/analytics";
 
 const WhatsAppButton = ({
   whatsappText = "Hola EDU MOTORS, necesito un diagnostico para mi vehiculo.",
+  hideOnMobile = false,
 }) => {
   const whatsappUrl = buildWhatsAppUrl(whatsappText);
 
@@ -14,7 +15,9 @@ const WhatsAppButton = ({
       target="_blank"
       rel="noopener noreferrer"
       onClick={() => trackEvent("click_whatsapp", { location: "floating_button" })}
-      className="fixed bottom-6 right-6 z-50 bg-[#25D366] p-4 rounded-full shadow-lg flex items-center justify-center text-white"
+      className={`fixed bottom-6 right-6 z-50 bg-[#25D366] p-4 rounded-full shadow-lg text-white items-center justify-center ${
+        hideOnMobile ? "hidden md:flex" : "flex"
+      }`}
       initial={{ scale: 0 }}
       animate={{ scale: 1 }}
       whileHover={{ scale: 1.1 }}

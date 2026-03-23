@@ -28,6 +28,7 @@ import fetch from '@/__create/fetch';
 import { toPng } from 'html-to-image';
 import { serializeError } from 'serialize-error';
 import { Toaster, toast } from 'sonner';
+import { businessData } from '../content/automotiveContent';
 import type { Route } from './+types/root';
 
 export function meta({ location }: Route.MetaArgs) {
@@ -473,11 +474,12 @@ export function Layout({ children }: { children: ReactNode }) {
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "AutoRepair",
-              "name": "EDU MOTORS",
+              "name": businessData.name,
               "image": "https://edumotors.pe/logo.png",
               "@id": "https://edumotors.pe",
               "url": "https://edumotors.pe",
-              "telephone": "+51960812600",
+              "telephone": `+${businessData.whatsappNumber}`,
+              "sameAs": [businessData.mapsUrl],
               "areaServed": [
                 "Villa El Salvador",
                 "San Juan de Miraflores",
@@ -489,16 +491,16 @@ export function Layout({ children }: { children: ReactNode }) {
               "priceRange": "$$",
               "address": {
                 "@type": "PostalAddress",
-                "streetAddress": "Av. Principal S/N",
-                "addressLocality": "Villa El Salvador",
-                "addressRegion": "Lima",
-                "postalCode": "15067",
-                "addressCountry": "PE"
+                "streetAddress": businessData.address,
+                "addressLocality": businessData.district,
+                "addressRegion": businessData.region,
+                "postalCode": businessData.postalCode,
+                "addressCountry": businessData.country
               },
               "geo": {
                 "@type": "GeoCoordinates",
-                "latitude": -12.2032047,
-                "longitude": -76.9427357
+                "latitude": businessData.latitude,
+                "longitude": businessData.longitude
               },
               "openingHoursSpecification": {
                 "@type": "OpeningHoursSpecification",
