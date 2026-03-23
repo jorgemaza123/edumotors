@@ -142,9 +142,11 @@ async function registerRoutes() {
 }
 
 // Initial route registration
-await registerRoutes().catch((err) => {
-  console.error('Failed to initial register routes:', err);
-});
+if (import.meta.env.DEV || process.env.NODE_ENV !== 'production') {
+  await registerRoutes().catch((err) => {
+    console.error('Failed to initial register routes:', err);
+  });
+}
 
 // Hot reload routes in development
 if (import.meta.env.DEV) {
