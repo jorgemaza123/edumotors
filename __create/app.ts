@@ -35,10 +35,12 @@ for (const method of ['log', 'info', 'warn', 'error', 'debug'] as const) {
   };
 }
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-});
-const adapter = NeonAdapter(pool);
+const pool = process.env.DATABASE_URL
+  ? new Pool({
+      connectionString: process.env.DATABASE_URL,
+    })
+  : null;
+const adapter = pool ? NeonAdapter(pool) : null;
 
 export function createApp() {
   const app = new Hono();
@@ -150,7 +152,7 @@ export function createApp() {
                 return null;
               }
 
-              const user = await adapter.getUserByEmail(email);
+              const user = adapter ? await adapter.getUserByEmail(email) : null;
               if (!user) {
                 return null;
               }
@@ -195,8 +197,11 @@ export function createApp() {
                 return null;
               }
 
-              const user = await adapter.getUserByEmail(email);
+              const user = adapter ? await adapter.getUserByEmail(email) : null;
               if (!user) {
+                if (!adapter) {
+                  return null;
+                }
                 const newUser = await adapter.createUser({
                   emailVerified: null,
                   email,
