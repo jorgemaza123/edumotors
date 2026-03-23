@@ -3,6 +3,7 @@ import { vercelPreset } from '@vercel/remix/vite';
 
 export default {
 	appDirectory: './src/app',
-	ssr: true,
+	ssr: false,
+	prerender: false,
 	presets: [vercelPreset()],
 } satisfies Config;
